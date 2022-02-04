@@ -1,4 +1,4 @@
-<h2>Че о кайфу делай или запишись</h2>
+<h2>Че по кайфу, то и делай или запишись</h2>
 <p>На данной страннце вы можете заисатья в наш Barbershop</p>
 
 <form action="/visit" method="POST">
@@ -8,10 +8,21 @@
     <label>Введите дату</label>
     <input name="date_time" type="text" class="form-control" placeholder="Введите дату">
   </div>
-  <br></br>
+
+<div class="mb-3">
+ <br><label>Ваш барбер:</label></br>
+ <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+  <option value="Walter White">Walter White</option>
+  <option value="Jessie Pinkman">Jessie Pinkman</option>
+  <option value="Gus Fring">Gus Fring</option>
+  </select>
+ </div> </br>
   <button type="submit" class="btn btn-primary">Записаться</button>
 </form>
-<br></br>
+
+
+
+
 <h3><%= @title %></h3>
 
 <h2><%= @message %></h2>
