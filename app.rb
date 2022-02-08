@@ -21,6 +21,27 @@ post '/visit' do
 	@date_time = params[:date_time]
 	@barber = params[:barber]
 	@color = params[:color]
+	# хеш для вывода ошибки
+	hh = {
+		:username => 'Введите имя',
+		:date_time => 'Введите дату и время'}
+	#для каждой пары ключ-значение
+	hh.each do |key, value|
+	# если параметр пуст
+		if params[key] == ''
+	#еременной error рисвоить value из хеша 
+	#а value из hh это сообщение об ощибке
+	#т.е. переменной error рисвоить сообщение об оштбке
+			@error = hh[key]
+	# вернуть представление
+			return erb :visit
+		end
+	end
+
+	if @username == ''
+		@error = 'Введите имя'
+		return erb :visit
+	end
 		
 	@title = "Thank you!"
 	@message = "Уважаемый #{@username}, мы ждём вас #{@date_time}, ваш барбер #{@barber}, цвет: #{@color}"
@@ -41,8 +62,7 @@ end
 post '/cont' do
 	
 	@email = params[:email]
-	@floatingTextarea = params[:floatingTextarea]
-  
+
     @otvet = "#{@email}, мы свяжемся с вами"
 
 	f = File.open 'contacts.txt', 'a'
