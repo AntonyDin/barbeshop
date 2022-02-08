@@ -4,11 +4,11 @@ require 'sinatra'
 require 'sinatra/reloader'
 
 get '/' do
-	erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"			
+  erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"			
 end
 
 get '/about' do
-	erb :about
+  erb :about
 end
 
 get '/visit' do
@@ -53,7 +53,7 @@ post '/visit' do
 	erb :visit
 end
 
-=begin
+
 get '/cont' do
   erb :cont
 end
@@ -63,13 +63,11 @@ post '/cont' do
 	
 	@email = params[:email]
 
-    @otvet = "#{@email}, мы свяжемся с вами"
+    @answer = "#{@email}, мы свяжемся с вами"
 
 	f = File.open 'contacts.txt', 'a'
-	  f.write "Ответить: #{@email}"
-	  f.close
+	f.write "Ответить: #{@email}"
+	f.close
 
 	erb :cont
   end
-
-=end
