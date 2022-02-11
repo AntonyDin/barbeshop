@@ -17,9 +17,28 @@ get '/visit' do
 	erb :visit
 end
 
+# Создадим базу данных при инициализации приложения: подключаем базу данных SQL
+
+def get_db
+  return SQLite3::Database.new 'users.sqlite'
+end
+configure do
+  # Подключение
+  db = get_db
+  # создаем таблицу, если нет
+  db.execute 'CREATE TABLE IF NOT EXISTS Users 
+    (
+      "id" INTEGER PRIMARY KEY AUTOINCREMENT, 
+      "username" TEXT, 
+      "datestamp" TEXT, 
+      "barber" TEXT, 
+      "color" TEXT
+    )'
+    db.close
+end
+
 post '/visit' do
-  # подключаем базу данных SQL
-  db = SQLite3::Database.new 'users.sqlite'
+
 
 #user_name, phone, date_time
   @username = params[:username]
@@ -48,18 +67,17 @@ post '/visit' do
 		  return erb :visit
 	  end
   end
+  
+  #Добавляем данные в базу данных
+  db = get_db
+  # добавим новую информацию в базу данных SQLite
+  db.execute 'INSERT INTO
+    Users
+      (username, datestamp, barber, color) 
+      VALUES (?, ?, ?, ?)', [@username, @date_time, @barber, @color]
 
   @title = "Thank you!"
   @message = "Уважаемый #{@username}, мы ждём вас #{@date_time}, ваш барбер #{@barber}, цвет: #{@color}"
-=begin
-  f = File.open 'users.txt', 'a'
-  f.write "User: #{@username}, date and time: #{@date_time}, barber: #{@barber}, color: #{@color}"
-  f.close
-=end
-  # добавим новую информацию в базу данных SQLite
-  db.execute "INSERT INTO Users (Username, Date_time, Barber, Color) VALUES ('#{@username}', '#{@date_time}', '#{@barber}', '#{@color}')"
-
-  db.close
 
   erb :visit
 
